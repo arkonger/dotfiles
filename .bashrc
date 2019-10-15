@@ -1,5 +1,10 @@
 # this file is processed on each interactive invocation of bash
 
+echo -ne "\033[1m"
+lsb_release --description --release | cut -f2 | tr '\n' ' ' | figlet -f smslant | lolcat
+echo -e "\033[0m"
+echo -e " Welcome back, $USER! Today is $(date +%A), $(date +'%b %d').\n" | lolcat
+
 # exits if not a tty
 [[ $- != *i* ]] && return
 
