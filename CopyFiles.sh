@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cp .vimrc ..
+cp .vimrc .vimmaps .bashrc ..
 cp .bashrc ..
 cp config ../.config/i3/

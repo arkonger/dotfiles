@@ -1,0 +1,68 @@
+" A collection of maps and functions to split long code comments: 
+" -----------------------------------------------------------------------------
+"   __        : Splits the current line at the start of the word containing
+"                 column 80
+" -----------------------------------------------------------------------------
+"   _<Enter>  : Splits the current line with __, adds the comment delimiter to
+"                 the start of the new line, and matches the previous line's
+"                 indentation
+" -----------------------------------------------------------------------------
+"   _-        : Works just as _<Enter>, but it also indents the text after the
+"                 delimiter
+" -----------------------------------------------------------------------------
+"   IndentComment(internalIndent)
+"             : A function which performs the indentation in _<Enter> and _-
+"               Arg: boolean internalIndent, which specifies whether to indent
+"                 after the delimiter. For _<Enter>, this is false. For _-,
+"                 this is true. 
+" -----------------------------------------------------------------------------
+nmap <silent> __ 80<Bar>wbi<BS><CR><Esc>
+function! IndentComment(internalIndent)
+  " Both maps begin by: 
+  "   1. Saving the start column as col1
+  "   2. Yanking the comment delimiter
+  "   3. Runing __
+  "   4. Moving back and forth a word to ensure the cursor is at the start of
+  "     the word
+  "   5. Saving the final column as col2
+  let col1 = col(".")
+  exec "normal yw__bw"
+  let col2 = col(".")
+  " Pastes the comment delimiter, and then adds a tab if internalIndent is true
+  exec "normal P" . (a:internalIndent ? "a\<Tab>\<Esc>" : "")
+  " Returns the cursor to the beginning of the line
+  exec "normal ^"
+  " Now the indentation needs to be checked. If the two columns are equal,
+  "   then autoindent worked properly. Otherwise, the line is indented to match. 
+  if col1 == col2
+    return
+  else
+    let tabs = float2nr(ceil((col1-col2)/&tabstop))
+    exec "normal V" . tabs . ">^"
+  endif
+endfunction
+nmap <silent> _<Enter> :call IndentComment(0)<CR>
+nmap <silent> _- :call IndentComment(1)<CR>
+
+" A function and map to toggle tabs/spaces: 
+function! ToggleTabs()
+  if &expandtab
+    set noexpandtab
+    echo "Tabs enabled"
+  else
+    set expandtab
+    echo "Spaces enabled"
+  endif
+endfunction
+nmap _<Tab> :call ToggleTabs()<CR>
+
+" The default behavior of Y is redundant with yy, which is inconsistent with
+"   D/dd and C/cc. 
+" New behavior: yank to end of line
+nmap <silent> Y y$
+
+" The default behavior of [n]>> is redundant with >[n]>, and it's nice to be able
+"   to indent a single line multiple times without switching to visual line mode
+"   or spamming >. 
+" New behavior: indent current line [n] times
+nmap <silent> >> @='V>'<Esc>
