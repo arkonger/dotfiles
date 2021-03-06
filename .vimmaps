@@ -173,8 +173,8 @@ function! ToggleVMM()
     echo "Very magic mode disabled"
     let s:VMM=0
   else
-    nmap <silent> / /\v
-    nmap <silent> ? ?\v
+    nmap / /\v
+    nmap ? ?\v
     echo "Very magic mode enabled"
     let s:VMM=1
   endif
