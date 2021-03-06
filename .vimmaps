@@ -137,7 +137,7 @@ function! ToggleTabs()
   endif
 endfunction
 " A map to call ToggleTabs()
-nmap _<Tab> :call ToggleTabs()<CR>
+nmap <silent> _<Tab> :call ToggleTabs()<CR>
 
 " The default behavior of Y is redundant with yy, and inconsistent with D/dd
 "   and C/cc. 
@@ -173,14 +173,14 @@ function! ToggleVMM()
     echo "Very magic mode disabled"
     let s:VMM=0
   else
-    nmap / /\v
-    nmap ? ?\v
+    nmap <silent> / /\v
+    nmap <silent> ? ?\v
     echo "Very magic mode enabled"
     let s:VMM=1
   endif
 endfunction
 " A map to call ToggleVMM()
-nmap _/ :call ToggleVMM()<CR>
+nmap <silent> _/ :call ToggleVMM()<CR>
 
 " A map to clear search results by emptying the search register
-nmap _? :let @/=""<CR>
+nmap <silent> _? :let @/=""<CR>
