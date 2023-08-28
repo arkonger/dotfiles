@@ -2,7 +2,7 @@
 set nowrap                      " Turns off text wrap
 set tabstop=2                   " Sets tab width to two spaces
 set shiftwidth=2                " Sets the width of ">>" shifts to two spaces
-" set expandtab                   " Expands tabs into spaces (doesn't affect
+set expandtab                   " Expands tabs into spaces (doesn't affect
                                 "   existing tabs)
 set backspace=indent,eol,start  " Backspace through everything in insert mode
 set autoindent									" Automatically indents new lines
