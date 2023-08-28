@@ -27,3 +27,8 @@ alias data="ssh nkonger@data.cs.purdue.edu"
 
 alias update="source ~/.bashrc"
 alias brc="vim ~/.bashrc"
+
+# Checks for ~/bin/cdn, adds alias so that it functions as intended
+if [ -f ~/bin/cdn ]; then
+  alias cdn=". cdn"
+fi

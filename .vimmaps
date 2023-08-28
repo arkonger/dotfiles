@@ -36,6 +36,7 @@
 "   UnsplitLine()
 "             : A function which performs the deletion in _<BS>
 " -----------------------------------------------------------------------------
+
 function! GotoWordBegin()
   " If the cursor starts at column 1, it must already be at the beginning of
   "   the word.
