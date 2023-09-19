@@ -2,36 +2,36 @@
 "   wrap:
 " -----------------------------------------------------------------------------
 "   __        : Splits the current line at the start of the word containing
-"                 column 80. 
+"                 column 80.
 " -----------------------------------------------------------------------------
 "   _<Enter>  : Splits the current line using __, adds the comment delimiter
 "                 (which is assumed to be the current word) to the start of
-"                 the new line, and matches the previous line's indentation. 
+"                 the new line, and matches the previous line's indentation.
 " -----------------------------------------------------------------------------
 "   _-        : Works just as _<Enter>, but also indents the text after the
 "                 delimiter
 " -----------------------------------------------------------------------------
 "   _<BS>     : Merges the current line with the previous one by deleting the
 "                 comment delimiter and all the whitespace before the start of
-"                 the text, and then backspacing into the previous line. 
+"                 the text, and then backspacing into the previous line.
 " -----------------------------------------------------------------------------
 "   IndentComment(internalIndent)
 "             : A function which performs the indentation in _<Enter> and _-
 "               Arg: boolean internalIndent, which specifies whether to indent
 "                 after the delimiter. For _<Enter>, this is false. For _-,
-"                 this is true. 
+"                 this is true.
 " -----------------------------------------------------------------------------
 "   GotoWordBegin()
 "             : A function which moves the cursor to the beginning of the
-"                 current word. This can be achieved naively with "normal wb",
+"                 current word. This can be achieved naïvely with "normal wb",
 "                 but this solution handles punctuation poorly. Since this
 "                 function detects words purely off of whitespace, it is able
-"                 to handle punctuation much better. 
+"                 to handle punctuation much better.
 " -----------------------------------------------------------------------------
 "   SplitLine()
 "             : A function which performs the line splitting in __
 "               Return: either 0, indicating that it successfully split the
-"                 line, or 1, indicating that it could not split the line. 
+"                 line, or 1, indicating that it could not split the line.
 " -----------------------------------------------------------------------------
 "   UnsplitLine()
 "             : A function which performs the deletion in _<BS>
@@ -43,59 +43,82 @@ function! GotoWordBegin()
   if col(".") == 1
     return
   endif
+  
   " Search backwards for the last whitespace (or, failing that, the beginning
   "   of the line) and move the cursor there
   call search('\s\|^', 'beW')
+  
   " The cursor should only be moved forward if it is currently on a whitespace
   "   character. Otherwise, it will be incorrectly moved to the next word. 
   if getline(".")[col(".")-1] !~ '\s'
     return
   endif
+  
   " Move forwards to the next non-whitespace character
-  normal w
+  normal W
 endfunction
 
 function! SplitLine()
-  " If the current line is less than 80 characters long, it doesn't need
-  "   split. 
-  if strchars(getline(".")) < 80
+  " If the current line is less than 80 characters long, it doesn't need split.
+  if strchars(getline(".")) <= 80
     return 1
   endif
+  
   " Move the cursor to column 80
-  normal 80|
+  normal 80|wB
+  
   " Move the cursor to the beginning of the current word
-  call GotoWordBegin()
+  " call GotoWordBegin()
+  
   " Switch to insert mode, type <BS><CR><Esc> to split the line
-  normal i
+  normal i
   return 0
 endfunction
 
 function! IndentComment(internalIndent)
-  " Both maps begin by: 
-  "   1. Saving the start column as col1
-  "   2. Yanking the comment delimiter
-  "   3. Calling SplitLine() and checking that is was successful. 
-  "   4. Calling GotoWordBegin()
-  "   5. Saving the resulting column as col2
+  " Get the starting column
   let col1 = virtcol(".")
-  normal yw
-  let wasNotSplit=SplitLine()
-  if wasNotSplit
+  
+  " Grab the comment delimiter
+  normal yW
+
+  " If the line doesn't need to split, there's nothing to do
+  if SplitLine()
     return
   endif
-  call GotoWordBegin()
+
+  " Neovim sometimes formats comments based on syntax files. If the current
+  "   column is greater than the starting column, then we can assume neovim
+  "   detected that we were in a comment block. All that should be done is to
+  "   indent if we're supposed to, and then return. 
+  if virtcol(".") > col1
+    if a:internalIndent
+      exec "normal Wi\<Tab>\<Esc>"
+    endif
+    normal ^
+    return
+  endif
+
+  " I already call this in SplitLine() so I'm not sure why this was here?
+  "   TODO: See if removing this broke anything. 
+  " call GotoWordBegin()
+
+  " Get the column we wound up at
   let col2 = virtcol(".")
+
   " Pastes the comment delimiter, and then adds a tab if internalIndent is true
   exec "normal P" . (a:internalIndent ? "a\<Tab>\<Esc>" : "")
+
   " Returns the cursor to the beginning of the line
   normal ^
+
   " Now the indentation needs to be checked. If the two columns are equal,
   "   then autoindent worked properly. Otherwise, the line is indented to
   "   match. 
   if col1 == col2
     return
   else
-    let tabs = float2nr(ceil((col1-col2)/&tabstop))
+    let tabs = float2nr(ceil((col1-col2)/&shiftwidth))
     exec "normal V" . tabs . ">^"
   endif
 endfunction
@@ -104,7 +127,8 @@ function! UnsplitLine()
   " Deletes from the comment delimiter to the start of the text, then deletes
   "   from there to the start of the line, then drops in and out of insert
   "   mode to delete the newline. 
-  normal dwd0i
+  normal dwd0i
+  
   " If the previous line did not end with a space, one needs to be added.
   "   Since the <Esc> at the end of the previous command moves the cursor back
   "   one, the current character is the last one of the previous line. 
@@ -114,6 +138,7 @@ function! UnsplitLine()
     normal ^
     return
   endif
+  
   " The previous line did not end with a space, so one is added and the cursor
   "   is moved to the beginning of the line. 
   normal a ^
@@ -122,19 +147,19 @@ endfunction
 nmap <silent> __ :call SplitLine()<CR>
 nmap <silent> _<Enter> :call IndentComment(0)<CR>
 nmap <silent> _- :call IndentComment(1)<CR>
-nmap <silent> _ :call UnsplitLine()<CR>
+nmap <silent> _<BS> :call UnsplitLine()<CR>
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Other assorted maps and functions: 
+"""""""""""""""""""""""""""""""""""""""
+" Other assorted maps and functions:  |
+"""""""""""""""""""""""""""""""""""""""
 
 " A function to toggle tabs/spaces
 function! ToggleTabs()
+  set invexpandtab
   if &expandtab
-    set noexpandtab
-    echo "Tabs enabled"
-  else
-    set expandtab
     echo "Spaces enabled"
+  else
+    echo "Tabs enabled"
   endif
 endfunction
 " A map to call ToggleTabs()
@@ -152,18 +177,19 @@ nmap <silent> Y y$
 nmap <silent> >> @='V>'<Esc>
 
 " A function to toggle a "very magic mode" shortcut: 
-"     Vim has a very versatile search function, given that it is capable of
-"   executing all but the most arcane RegExes. However, the default search
-"   behavior notably interprets many special characters (such as parentheses,
-"   brackets, and even periods and plus signs) as literal characters; to use
-"   them as special characters in a RegEx, they need to be escaped. While this
-"   is very convenient for mundane (non-RegEx) searches, it makes even simple
-"   RegExes quite cumbersome to type. Fortunately, the \v and \V
-"   metacharacters can be used to drop in and out of "very magic mode", which
-"   interprets all special characters as such—no need to escape!
-"     A simple map can be used to default to VMM by prepending searches with
-"   \v, but this may not always be desirable. Therefore, the below function
-"   sets and unsets the map as a toggle. 
+"   Vim has a very versatile search function, given that it is capable of
+"     executing all but the most arcane RegExes. However, the default search
+"     behavior notably interprets many special characters (such as
+"     parentheses, brackets, and even periods and plus signs) as literal
+"     characters; to use them as special characters in a RegEx, they need to
+"     be escaped. While this is very convenient for mundane (non-RegEx)
+"     searches, it makes even simple RegExes quite cumbersome to type.
+"     Fortunately, the \v and \V metacharacters can be used to drop in and out
+"     of "very magic mode", which interprets all special characters as such --
+"     no need to escape!
+"   A simple map can be used to default to VMM by prepending searches with \v,
+"     but this may not always be desirable. Therefore, the below function sets
+"     and unsets the map as a toggle. 
 function! ToggleVMM()
   if !exists("s:VMM")
     let s:VMM=0
@@ -185,3 +211,84 @@ nmap <silent> _/ :call ToggleVMM()<CR>
 
 " A map to clear search results by emptying the search register
 nmap <silent> _? :let @/=""<CR>
+
+" A function to toggle case sensitivity
+function! ToggleIgnoreCase()
+  set invignorecase
+  if &ignorecase
+    echo "Searches will ignore case"
+  else
+    echo "Searches will respect case"
+  endif
+endfunction
+" A map to call ToggleIgnoreCase()
+nmap <silent> <M-i> :call ToggleIgnoreCase()<CR>
+
+" A function to toggle default behavior of cursor row/column highlighting. 
+function! ToggleDefaultCucCul()
+  if !exists("s:DefaultCucCul")
+    let s:DefaultCucCul=0
+  endif
+  if s:DefaultCucCul
+    echo "Column/Row highlighting disabled"
+    let s:DefaultCucCul=0
+    set nocursorcolumn nocursorline
+  else
+    echo "Column/Row highlighting enabled"
+    let s:DefaultCucCul=1
+    set cursorcolumn cursorline
+  endif
+endfunction
+nmap <silent> _+ :call ToggleDefaultCucCul()<CR>
+
+" A function to enable or disable cursor row/column highlighting, contingent
+"   on the current default behavior. This is called by the below autocommands
+"   so that only the current window has highlights. 
+"   Arg: boolean enable, which indicates whether to enable or disable
+"     highlighting. 
+function! SetCucCul(enable)
+  " Set default behavior
+  if !exists("s:DefaultCucCul")
+    let s:DefaultCucCul=0
+  endif
+
+  " Get the value to set
+  let l:CucCul = s:DefaultCucCul && a:enable
+  
+  " Set it
+  let &cursorcolumn=l:CucCul
+  let &cursorline=l:CucCul
+endfunction
+au WinLeave * :call SetCucCul(0)
+au WinEnter * :call SetCucCul(1)
+
+" Insert a newline, but stay in normal mode
+nmap <M-o> o
+nmap <M-O> O
+
+" Maps Alt+j/k to scroll down one, keeping the cursor centered. 
+nmap <M-j> jzz
+nmap <M-k> kzz
+
+" Navigate tabs quicker
+nmap <M-h> gT
+nmap <M-l> gt
+nmap <silent> <M-H> :tabmove -
+nmap <silent> <M-L> :tabmove +
+
+function! ToggleColorColumn()
+  if &colorcolumn
+    set colorcolumn=0
+    echo "Color column disabled"
+  else
+    set colorcolumn=80
+    echo "Color column enabled"
+  endif
+endfunction
+nmap <silent> _<Bar> :call ToggleColorColumn()<CR>
+
+" Reload configs
+nmap <silent> _u :source $MYVIMRC<CR>
+
+" Open a terminal in new tab
+nmap <silent> <M-t> :tabnew \| terminal<CR>
