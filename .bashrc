@@ -1,12 +1,12 @@
-# this file is processed on each interactive invocation of bash
+# This file is processed on each interactive invocation of bash
 
-# TODO where did the attribution for this go?????
+# Courtesy of /u/badmemekid3000 and /u/MoyensInoperants:
+# https://old.reddit.com/r/linuxmasterrace/comments/dhrhab/it_took_about_an_hour_to_get_it_to_look_right_im/f3r2kq8/?context=3
 echo -ne "\033[1m"
 lsb_release --description --release | cut -f2 | tr '\n' ' ' |\
   figlet -f smslant | lolcat
 echo -e "\033[0m"
-echo -e " Welcome back, $USER! Today is $(date +%A), $(date +'%b %d').\n" |\
-  lolcat
+echo -e " Welcome back, $USER! Today is $(date '+%A, %b %d.')\n" | lolcat
 
 # Exits if not a tty
 [[ $- != *i* ]] && return
@@ -47,18 +47,13 @@ alias data="ssh nkonger@data.cs.purdue.edu"
 
 # R.I.P. Bram Moolenaar
 alias vim="nvim"
+export EDITOR=nvim
 
 # Misc aliases
 alias update="source ~/.bashrc"
 alias brc="vim ~/.bashrc"
 alias i3c="vim ~/.config/i3/config"
 alias i3b="vim ~/.config/i3/i3blocks.conf"
-
-# Checks for ~/bin/cdn, adds alias so that it functions as intended
-# TODO why did this stop cd'ing??
-if [ -f ~/bin/cdmk ]; then
-  alias cdmk=". cdmk"
-fi
 
 # Always use aria2 for downloads
 alias yt-dlp="yt-dlp --downloader=aria2c"

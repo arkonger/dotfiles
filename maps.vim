@@ -21,13 +21,6 @@
 "                 after the delimiter. For _<Enter>, this is false. For _-,
 "                 this is true.
 " -----------------------------------------------------------------------------
-"   GotoWordBegin()
-"             : A function which moves the cursor to the beginning of the
-"                 current word. This can be achieved naïvely with "normal wb",
-"                 but this solution handles punctuation poorly. Since this
-"                 function detects words purely off of whitespace, it is able
-"                 to handle punctuation much better.
-" -----------------------------------------------------------------------------
 "   SplitLine()
 "             : A function which performs the line splitting in __
 "               Return: either 0, indicating that it successfully split the
@@ -37,27 +30,6 @@
 "             : A function which performs the deletion in _<BS>
 " -----------------------------------------------------------------------------
 
-function! GotoWordBegin()
-  " If the cursor starts at column 1, it must already be at the beginning of
-  "   the word.
-  if col(".") == 1
-    return
-  endif
-  
-  " Search backwards for the last whitespace (or, failing that, the beginning
-  "   of the line) and move the cursor there
-  call search('\s\|^', 'beW')
-  
-  " The cursor should only be moved forward if it is currently on a whitespace
-  "   character. Otherwise, it will be incorrectly moved to the next word. 
-  if getline(".")[col(".")-1] !~ '\s'
-    return
-  endif
-  
-  " Move forwards to the next non-whitespace character
-  normal W
-endfunction
-
 function! SplitLine()
   " If the current line is less than 80 characters long, it doesn't need split.
   if strchars(getline(".")) <= 80
@@ -66,9 +38,6 @@ function! SplitLine()
   
   " Move the cursor to column 80
   normal 80|wB
-  
-  " Move the cursor to the beginning of the current word
-  " call GotoWordBegin()
   
   " Switch to insert mode, type <BS><CR><Esc> to split the line
   normal i
@@ -98,10 +67,6 @@ function! IndentComment(internalIndent)
     normal ^
     return
   endif
-
-  " I already call this in SplitLine() so I'm not sure why this was here?
-  "   TODO: See if removing this broke anything. 
-  " call GotoWordBegin()
 
   " Get the column we wound up at
   let col2 = virtcol(".")
