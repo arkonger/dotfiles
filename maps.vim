@@ -257,3 +257,11 @@ nmap <silent> _u :source $MYVIMRC<CR>
 
 " Open a terminal in new tab
 nmap <silent> <M-t> :tabnew \| terminal<CR>
+
+" Toggle nvim-tree
+nmap <silent> <M-T> :NvimTreeToggle<CR>
+
+" Use <Esc> to get out of terminal...
+tmap <Esc> 
+" ...unless ctrl is also pressed
+tnoremap <C-Esc> <Esc>

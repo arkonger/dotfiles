@@ -50,5 +50,6 @@ else                            " Neovim-specific options go here             |
                                   "   of where they're typed
   set startofline                 " Move to the first non-whitespace character
                                   "   of the line when using certain commands
+  source ~/.config/nvim/lazy.lua  " Load plugins
 endif                           """""""""""""""""""""""""""""""""""""""""""""""
 source ~/.vim/maps.vim          " Loads my custom key maps
