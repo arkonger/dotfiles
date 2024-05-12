@@ -3,10 +3,10 @@
 # Courtesy of /u/badmemekid3000 and /u/MoyensInoperants:
 # https://old.reddit.com/r/linuxmasterrace/comments/dhrhab/it_took_about_an_hour_to_get_it_to_look_right_im/f3r2kq8/?context=3
 echo -ne "\033[1m"
-lsb_release --description --release | cut -f2 | tr '\n' ' ' |\
-  figlet -f smslant | lolcat
+lsb_release --description --release | cut -f2 |\
+  awk 'NR == 1 {print} NR > 1 {print "\t"$0}' | figlet -pf smslant | lolcat
 echo -e "\033[0m"
-echo -e " Welcome back, $USER! Today is $(date '+%A, %b %d.')\n" | lolcat
+echo -e "Welcome back, $USER! Today is $(date '+%A, %b %d.')\n" | lolcat
 
 # Exits if not a tty
 [[ $- != *i* ]] && return
