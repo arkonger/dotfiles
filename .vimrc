@@ -1,4 +1,3 @@
-syntax on                       " Colors text according to syntax
 try
   colorscheme elfemperor        " My own slight modification of elflord
 catch /^Vim\%((\a\+)\)\=:E185:/
@@ -8,7 +7,6 @@ set termguicolors               " Allow gui (24-bit) color palettes for
                                 "   terminals which support it, rather than
                                 "   the limited 256-color (or worse) palettes
 set nowrap                      " Turns off text wrap
-" set scrolloff=3               " Always keep a few lines above/below the cursor
 set mouse=a                     " Enables mouse control; in neovim this also
                                 "   allows mouse in command mode
 set timeoutlen=1500             " Extends the timeout length to 1.5s when
@@ -30,14 +28,11 @@ set foldmethod=indent           " Allows automatic fold marking based on line
                                 "   indentation
 set foldcolumn=2                " Adds a column indicating folded lines
 set foldlevelstart=99           " Expand all folds by default
-" set cursorline cursorcolumn   " Activate the cursor row/column highlights by
-                                "   default (this can be changed with _+ as in
-                                "   maps.vim).
-                                " Note: This should probably be handled
-                                "   exclusively in the maps.vim function
+set virtualedit=block           " Allow virtual block mode to extend past EOL
                                 """""""""""""""""""""""""""""""""""""""""""""""
 if !has('nvim')                 " Vim-specific options go here                |
                                 """""""""""""""""""""""""""""""""""""""""""""""
+  syntax on                       " Colors text according to syntax
   set autoindent                  " Automatically indents new lines
   set backspace=indent,eol,start  " Backspace through everything in insert mode
   set hlsearch                    " Highlights search results

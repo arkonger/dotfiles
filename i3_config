@@ -644,6 +644,7 @@ for_window [class="(?i)steam"] floating enable
 for_window [title="(?i)^steam$"] floating enable
 # Except for the main client window, which is the only one with both I think?
 for_window [class="(?i)steam" title="(?i)^steam$"] floating disable
+for_window [instance="system-config-printer"] floating enable
 
 # Set border of floating window
 for_window [floating] border normal 1 
