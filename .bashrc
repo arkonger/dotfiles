@@ -42,6 +42,9 @@ function build_prompt() {
 }
 PS1=`build_prompt`
 
+# Play a bell on sudo prompts
+export SUDO_PROMPT=$'\a[sudo] please enter a password: '
+
 # TODO figure out if I can even login anymore lmao
 alias data="ssh nkonger@data.cs.purdue.edu"
 
