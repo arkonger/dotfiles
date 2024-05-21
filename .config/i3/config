@@ -534,6 +534,9 @@ exec_always --no-startup-id picom -b
 # Get auth work with polkit-gnome
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
+# Running this is supposed to resolve issues with blueman-manager
+sleep 120 && exec dbus-update-activation-environment
+
 # dex execute .desktop files + apps using /etc/xdg/autostart.
 # when second to i3 a DE is installed or mixed usage of i3 + xfce4 or GNOME
 # in this cases better disable dex and use manual starting apps using xdg/autostart
@@ -600,6 +603,7 @@ exec --no-startup-id /usr/bin/dunst
 #exec --no-startup-id sleep 7 && firefox https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
 exec /usr/bin/kitty /usr/local/bin/mainchk
+exec --no-startup-id udiskie -t
 
 ###############
 # System tray #

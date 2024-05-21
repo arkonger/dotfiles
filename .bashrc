@@ -14,6 +14,9 @@ echo -e "Welcome back, $USER! Today is $(date '+%A, %b %d.')\n" | lolcat
 # Adds fuck functionality
 eval $(thefuck --alias)
 
+# Adds zoxide functionality
+eval "$(zoxide init --cmd cd bash)"
+
 # General bash settings
 export HISTCONTROL=erasedups
 export HISTSIZE=10000
