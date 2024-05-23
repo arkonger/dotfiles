@@ -265,3 +265,11 @@ nmap <silent> <M-T> :NvimTreeToggle<CR>
 tmap <Esc> 
 " ...unless ctrl is also pressed
 tnoremap <C-Esc> <Esc>
+
+" Yank to "+ (system clipboard)
+nmap <M-y> "+y
+" Yank line (this can also be done with <M-y>y but this is provided for
+"   convenience)
+nmap <M-y><M-y> "+yy
+" Yank to EOL
+nmap <M-Y> "+y$
