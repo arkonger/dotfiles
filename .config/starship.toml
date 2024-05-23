@@ -1,0 +1,107 @@
+# Adapted from the Gruvbox Rainbow preset
+# https://starship.rs/presets/gruvbox-rainbow
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](color_pink)\
+$os\
+$username\
+[](bg:color_purple fg:color_pink)\
+$directory\
+[](fg:color_purple bg:color_blue)\
+$git_branch\
+$git_status\
+[](fg:color_blue bg:color_lightgrey)\
+$cmd_duration\
+[](fg:color_lightgrey bg:color_darkgrey)\
+$time\
+[ ](fg:color_darkgrey)\
+$line_break$character"""
+
+palette = 'custom'
+
+[palettes.custom]
+color_fg0 = '#ffffff'
+color_darkgrey = '#363636'
+color_lightgrey = '#949494'
+color_pink = '#d36869'
+color_blue = '#6868d3'
+color_purple = '#b35eab'
+color_success = '#00ff00'
+color_error = '#ff0000'
+
+[os]
+disabled = false
+style = "bg:color_pink fg:color_fg0"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+EndeavourOS = ""
+
+[username]
+show_always = true
+style_user = "bg:color_pink fg:color_fg0"
+style_root = "bg:color_pink fg:color_fg0"
+format = '[ $user ]($style)'
+
+[directory]
+style = "fg:color_fg0 bg:color_purple"
+format = "[ $path ]($style)"
+truncate_to_repo = false
+truncation_length = 0
+# truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+# "Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol $branch ](fg:color_fg0 bg:color_blue)]($style)'
+
+[git_status]
+style = "bg:color_blue"
+format = '[[($all_status$ahead_behind )](fg:color_fg0 bg:color_blue)]($style)'
+
+[cmd_duration]
+min_time = 1_000
+show_milliseconds = true
+show_notifications = true
+min_time_to_notify = 120_000
+format = '[ took $duration ](fg:color_fg0 bg:color_lightgrey)'
+
+[time]
+disabled = false
+time_format = "%I:%M%P"
+style = "bg:color_darkgrey"
+format = '[[  $time ](fg:color_fg0 bg:color_darkgrey)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[=>](bold color_success)'
+error_symbol = '[=>](bold color_error)'
