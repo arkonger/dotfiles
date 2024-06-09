@@ -231,9 +231,17 @@ au WinEnter * :call SetCucCul(1)
 nmap <M-o> o
 nmap <M-O> O
 
-" Maps Alt+j/k to scroll down one, keeping the cursor centered. 
-nmap <M-j> jzz
-nmap <M-k> kzz
+" Maps Alt+J/K to scroll down one, keeping the cursor centered. 
+nmap <M-J> jzz
+nmap <M-K> kzz
+
+" Maps Alt+j/k to move the cursor down/up in a wrapped line
+nmap <M-j> gj
+nmap <M-k> gk
+
+" And in insert mode, Alt+Up/Down
+imap <M-Up> gk
+imap <M-Down> gj
 
 " Navigate tabs quicker
 nmap <M-h> gT
@@ -268,8 +276,22 @@ tnoremap <C-Esc> <Esc>
 
 " Yank to "+ (system clipboard)
 nmap <M-y> "+y
+" And in visual mode
+vmap <M-y> "+y
 " Yank line (this can also be done with <M-y>y but this is provided for
 "   convenience)
 nmap <M-y><M-y> "+yy
 " Yank to EOL
 nmap <M-Y> "+y$
+
+" Toggle line wrap and linebreak
+function! ToggleWrap()
+  if &wrap
+    set nowrap nolinebreak
+    echo "Line wrap disabled"
+  else
+    set wrap linebreak
+    echo "Line wrap enabled"
+  endif
+endfunction
+nmap <silent> _w :call ToggleWrap()<CR>
