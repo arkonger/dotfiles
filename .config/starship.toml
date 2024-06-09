@@ -24,9 +24,9 @@ palette = 'custom'
 color_fg0 = '#ffffff'
 color_darkgrey = '#363636'
 color_lightgrey = '#949494'
-color_pink = '#d36869'
-color_blue = '#6868d3'
-color_purple = '#b35eab'
+color_pink = '#ff7f7f'
+color_blue = '#7f7fff'
+color_purple = '#D972CF'
 color_success = '#00ff00'
 color_error = '#ff0000'
 
@@ -66,8 +66,8 @@ format = '[ $user ]($style)'
 style = "fg:color_fg0 bg:color_purple"
 format = "[ $path ]($style)"
 truncate_to_repo = false
-truncation_length = 0
-# truncation_symbol = "…/"
+truncation_length = 6
+truncation_symbol = "…/"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
