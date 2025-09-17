@@ -135,6 +135,13 @@ require("lazy").setup({
       require("lspconfig").lua_ls.setup {}
     end,
   },
+  --[[{
+      "L3MON4D3/LuaSnip",
+      -- follow latest release.
+      version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      -- install jsregexp (optional!).
+      -- build = "make install_jsregexp"
+  },--]]
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -186,5 +193,8 @@ require("lazy").setup({
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     ft = { "markdown" },
     build = function() vim.fn["mkdp#util#install"]() end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
   },
 })

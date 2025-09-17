@@ -269,6 +269,9 @@ nmap <silent> <M-t> :tabnew \| terminal<CR>
 " Toggle nvim-tree
 nmap <silent> <M-T> :NvimTreeToggle<CR>
 
+" Toggle colorizer
+nmap <silent> <M-c> :ColorizerToggle<CR>
+
 " Use <Esc> to get out of terminal...
 tmap <Esc> 
 " ...unless ctrl is also pressed
