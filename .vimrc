@@ -7,6 +7,9 @@ set termguicolors               " Allow gui (24-bit) color palettes for
                                 "   terminals which support it, rather than
                                 "   the limited 256-color (or worse) palettes
 set nowrap                      " Turns off text wrap
+set linebreak                   " Formatting for line wrapping, when enabled.
+set breakindent
+set breakindentopt=shift:2
 set mouse=a                     " Enables mouse control; in neovim this also
                                 "   allows mouse in command mode
 set timeoutlen=1500             " Extends the timeout length to 1.5s when
