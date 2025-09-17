@@ -50,11 +50,12 @@ Amazon = ""
 Android = ""
 Arch = "󰣇"
 Artix = "󰣇"
+EndeavourOS = ""
 CentOS = ""
 Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
-EndeavourOS = ""
+Pop = ""
 
 [username]
 show_always = true
@@ -90,7 +91,7 @@ min_time = 1_000
 show_milliseconds = true
 show_notifications = true
 min_time_to_notify = 120_000
-format = '[ took $duration ](fg:color_fg0 bg:color_lightgrey)'
+format = '[  $duration ](fg:color_fg0 bg:color_lightgrey)'
 
 [time]
 disabled = false
