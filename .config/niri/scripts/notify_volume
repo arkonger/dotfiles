@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ |\
+          awk '{print $2}')
+VOLUME=$(echo "$VOLUME * 100 / 1" | bc)
+
+notify-send "Volume: ${VOLUME}%" -t 1 -r 5593
