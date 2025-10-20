@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Check for lock file; else create it
+if [[ -a ~/.config/niri/scripts/locker.lock ]]
+then
+  echo "Locker error: Lock file already exists!"
+  exit
+fi
+touch ~/.config/niri/scripts/locker.lock
+
+# Fork a second swayidle to blank screen faster
+swayidle timeout 30 'niri msg action power-off-monitors' \
+  resume 'niri msg action power-on-monitors' &
+CHILD=$!
+
+# Wake up display to get screenshot
+niri msg action power-on-monitors
+
+# Start a screen transition
+niri msg action do-screen-transition -d 333
+# Start gtklock
+gtklock -t '%H:%M:%S' \
+  --date-format '%F — %A' \
+  -b <(grimshot save screen - | \
+        magick - -blur 0x5 -) \
+  -H -T 15 \
+  -g 'Breeze'
+
+# Cleanup:
+# Kill child
+kill $CHILD || kill -9 $CHILD
+# Release lock
+rm ~/.config/niri/scripts/locker.lock
+
+# Wake up display TODO: why is this necessary???
+niri msg action power-on-monitors
