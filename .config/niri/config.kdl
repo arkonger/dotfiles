@@ -219,8 +219,6 @@ environment {
 }
 
 // Setting up niri
-// Remove screen lock file in case of ungraceful exits
-spawn-sh-at-startup "rm ~/.config/niri/scripts/locker.lock"
 // Nirius adds some neat functionality such as sticky windows and focus-or-spawn
 spawn-at-startup "niriusd"
 // Application switcher
@@ -232,8 +230,10 @@ spawn-sh-at-startup "\\
       resume 'niri msg action power-on-monitors' \\
     timeout 900 '~/.config/niri/scripts/locker' \\
     before-sleep '~/.config/niri/scripts/locker' \\
-    lock '~/.config/sway/scripts/locker'\\
+    lock '~/.config/niri/scripts/locker'\\
   "
+// Remove screen lock file in case of ungraceful exits
+spawn-sh-at-startup "rm ~/.config/niri/scripts/locker.lock"
 
 // TODO: put window rules here
 

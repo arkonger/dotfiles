@@ -32,5 +32,5 @@ kill $CHILD || kill -9 $CHILD
 # Release lock
 rm ~/.config/niri/scripts/locker.lock
 
-# Wake up display TODO: why is this necessary???
+# Wake up display
 niri msg action power-on-monitors
