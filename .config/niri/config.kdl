@@ -169,7 +169,7 @@ layout {
 
   // Border style
   border {
-    width 8
+    width 4
     active-gradient   from="#FF0099" to="#EE00FF" angle=-90 \
       in="oklch shorter hue"
     inactive-color "#A956AF"
@@ -212,6 +212,22 @@ window-rule {
 window-rule {
   match is-active=false
   opacity 0.8
+}
+// Smaller borders/focus-ring for floating windows
+window-rule {
+  match is-floating=true
+  border {
+    width 2
+    inactive-color "#823089"
+  }
+  focus-ring {
+    width 6
+  }
+  // Softer, brighter shadows to give a glowing effect
+  shadow {
+    softness 12
+    inactive-color "#823089C0"
+  }
 }
 
 prefer-no-csd
