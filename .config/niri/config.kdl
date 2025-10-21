@@ -366,6 +366,12 @@ binds {
         ~/.config/niri/scripts/notify_volume\\
       "
   }
+  Shift+XF86AudioLowerVolume  allow-when-locked=true cooldown-ms=125 {
+    spawn-sh "\\
+      wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05- -l 1.5 && \\
+        ~/.config/niri/scripts/notify_volume\\
+      "
+  }
   XF86AudioMute               allow-when-locked=true cooldown-ms=125 {
     spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   }
