@@ -1,12 +1,13 @@
 #!/bin/bash
 
 # Check for lock file; else create it
-if [[ -a ~/.config/niri/scripts/locker.lock ]]
+LOCK="$HOME/.config/niri/scripts/locker-$WAYLAND_DISPLAY.lock"
+if [[ -a $LOCK ]]
 then
   echo "Locker error: Lock file already exists!"
   exit
 fi
-touch ~/.config/niri/scripts/locker.lock
+touch $LOCK
 
 # Fork a second swayidle to blank screen faster
 swayidle timeout 30 'niri msg action power-off-monitors' \
@@ -30,7 +31,7 @@ gtklock -t '%H:%M:%S' \
 # Kill child
 kill $CHILD || kill -9 $CHILD
 # Release lock
-rm ~/.config/niri/scripts/locker.lock
+rm $LOCK
 
 # Wake up display
 niri msg action power-on-monitors
