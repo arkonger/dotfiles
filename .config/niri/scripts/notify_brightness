@@ -5,4 +5,4 @@ BMAX=$(brightnessctl max)
 BRIGHTNESS=$(echo "b = e(l(${BRIGHTNESS}/${BMAX})/4)*100; scale=0; b/1" \
               | bc -l)
 
-notify-send "Brightness: ${BRIGHTNESS}%" -t 1 -r 5594
+notify-send -t 750 -a "Brightness" "Brightness:" "${BRIGHTNESS}%"

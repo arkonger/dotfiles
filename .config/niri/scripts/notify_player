@@ -4,10 +4,10 @@
 sleep 0.1
 
 STATUS=$(playerctl status)
-if [[ $? ]]; then
-  notify-send -t 750 -r 5595 \
-    "${STATUS}: $(playerctl metadata artist) - $(playerctl metadata title)"
+if [[ $? == "0" ]]; then
+  notify-send -t 3000 -a "Player" "Player: $STATUS" \
+    "$(playerctl metadata artist) - $(playerctl metadata title)"
 else
-  notify-send -t 200 -r 5595 "Nothing Playing."
+  notify-send -t 750 -a "Player" "Player:" "Nothing Playing."
 fi
 

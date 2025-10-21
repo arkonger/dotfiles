@@ -4,4 +4,4 @@ VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ |\
           awk '{print $2}')
 VOLUME=$(echo "$VOLUME * 100 / 1" | bc)
 
-notify-send "Volume: ${VOLUME}%" -t 1 -r 5593
+notify-send -t 750 -a "Volume" "Volume:" "${VOLUME}%"
