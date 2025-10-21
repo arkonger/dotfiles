@@ -3,32 +3,36 @@
 //    Funny meme color, but also pretty :3
 //    #B00B69
 //    #FF0099
-//    #AF4F79
-//    #892B58
+//    #9F5675
+//    #712D4C
 //
 //  Analogous Hue 1:
 //    #FF00CF
-//    #AF5194
-//    #882D71
+//    #B05295
+//    #892E71
 //
 //  Analogous Hue 2:
 //    #EE00FF
-//    #A855AE
-//    #812F88
+//    #A956AF
+//    #823089
+//  Nice Matching Greys:
+//    #4E3250
+//    #866687
+//    #C09EC2
 //
 //  Urgent Hue:
 //    #FF0069
 //
 //  Colors from niri logo:
-//    #d8485f
-//    #d88748
-//
+//    #D8485F
 //    #FF0057
-//    #AF4E59
-//    #892B3A
+//    #B04F5A
+//    #8A2C3B
+//
+//    #D88748
 //    #FF8800
-//    #AE764D
-//    #885329
+//    #AF774E
+//    #89532A
 
 // TODO:
 // - Mode script (or can it just be spawn-sh's?)
@@ -98,7 +102,7 @@ output "eDP-1" {
   position x=1920 y=0
   focus-at-startup
   background-color  "#B00B69"
-  backdrop-color    "#AF4F79"
+  backdrop-color    "#9F5675"
 }
 
 output "HDMI-1" {
@@ -107,7 +111,7 @@ output "HDMI-1" {
   position x=0 y=0
   scale 1.5
   background-color  "#B00B69"
-  backdrop-color    "#AF4F79"
+  backdrop-color    "#9F5675"
 
   // Layout changes TODO: next release
   /-layout {
@@ -136,12 +140,14 @@ layout {
 
     length total-proportion=0.66667
     width 8
+    // Would be good to reduce gap for inactive?
+    // Theoretically TODO if I feel like trying to make a pull request
     gap 12
     gaps-between-tabs 4
     corner-radius 4
 
     active-color    "#FF0099"
-    inactive-color  "#A855AE"
+    inactive-color  "#A956AF"
     urgent-color    "#FF0069"
   }
 
@@ -164,29 +170,30 @@ layout {
   // Border style
   border {
     width 8
-    active-gradient   from="#FF0099" to="#EE00FF" angle=45 \
+    active-gradient   from="#FF0099" to="#EE00FF" angle=-90 \
       in="oklch shorter hue"
-    inactive-gradient from="#AF4F79" to="#A855AE" angle=45 \
-      in="oklch shorter hue"
-    urgent-gradient   from="#FF0069" to="#FF0099" angle=45 \
+    inactive-color "#A956AF"
+    urgent-gradient   from="#FF0069" to="#FF0099" angle=-90 \
       in="oklch shorter hue"
   }
   // A difference of 135deg maximizes the visual contrast
   focus-ring {
     width 8
-    active-gradient   from="#FF0099" to="#EE00FF" angle=-90 \
+    active-gradient   from="#FF0099" to="#EE00FF" angle=45 \
       in="oklch shorter hue"
-    inactive-gradient from="#AF4F79" to="#A855AE" angle=-90 \
+    inactive-gradient from="#9F5675" to="#A956AF" angle=45 \
       in="oklch shorter hue"
-    urgent-gradient   from="#FF0069" to="#FF0099" angle=-90 \
+    urgent-gradient   from="#FF0069" to="#FF0099" angle=45 \
       in="oklch shorter hue"
   }
   // Shadow style
   shadow {
     on
+    offset x=0 y=0
+    softness 10
+    spread 8
     draw-behind-window true
-    softness 12
-    color "#812F88C0"
+    color "#A956AFC0"
   }
   insert-hint {
     gradient from="#FF0099" to="#B00B69" angle=45 in="oklch shorter hue"
