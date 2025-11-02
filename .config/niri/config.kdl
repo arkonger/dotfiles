@@ -207,11 +207,11 @@ window-rule {
 // Opacity rules
 window-rule {
   match is-active=true
-  opacity 1.0
+  opacity 0.95
 }
 window-rule {
   match is-active=false
-  opacity 0.8
+  opacity 0.75
 }
 // Smaller borders/focus-ring for floating windows
 window-rule {
@@ -236,10 +236,10 @@ prefer-no-csd
 // Setting up system
 spawn-at-startup "xfce4-panel"
 spawn-sh-at-startup "udiskie -t"
-spawn-at-startup "xwayland-satellite"
-environment {
-  DISPLAY ":0"
-}
+// TODO: What was I supposed to use instead of this?
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-sh-at-startup "swaybg -i $HOME/.local/share/wallpaper.png"
+spawn-sh-at-startup "wlsunset -l 42.36 -L -71.06"
 
 // Setting up niri
 // Nirius adds some neat functionality such as sticky windows and focus-or-spawn
