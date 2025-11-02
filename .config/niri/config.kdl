@@ -78,6 +78,7 @@ input {
   mouse {
     // Mouse on the other hand...
     accel-profile "flat"
+    scroll-factor 0.5
   }
 
   // Touchscreen disabled
@@ -234,6 +235,8 @@ prefer-no-csd
 
 // Autostart
 // Setting up system
+// TODO: Get waybar setup
+// TODO: Until then, at least get panel in the right layer
 spawn-at-startup "xfce4-panel"
 spawn-sh-at-startup "udiskie -t"
 // TODO: What was I supposed to use instead of this?
@@ -323,7 +326,7 @@ binds {
   // Overview
   Mod+O repeat=false { toggle-overview; }
   // MX Master Thumb Button
-  // Ctrl+Alt+Tab repeat=false { toggle-overview; }
+  Ctrl+Alt+Tab repeat=false { toggle-overview; }
   // Suggested binding for escaping rogue VMs etc.
   Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
   // Quit niri
@@ -554,10 +557,11 @@ binds {
       niri msg action switch-preset-window-height;\\
       "
   }
-  // Expand the focused column to space not taken up by other fully visible columns.
-  // Makes the column "fill the rest of the space".
-  // Have yet to find a use for this but I'll leave it for now? TODO
-  Mod+Ctrl+F { expand-column-to-available-width; }
+  // Expand column to take up any empty space
+  // TODO: how should this behave?
+  Mod+Ctrl+F {
+    expand-column-to-available-width;
+  }
 
   Mod+C { center-column; }
 
