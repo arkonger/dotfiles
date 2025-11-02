@@ -248,12 +248,17 @@ spawn-at-startup "niriusd"
 spawn-at-startup "niriswitcher"
 // Power off screen after 5m; lock after 15m
 spawn-sh-at-startup "\\
-  swayidle -w \\
-    timeout 300 'niri msg action power-off-monitors' \\
+  swayidle \\
+    timeout  300 'niri msg action power-off-monitors' \\
       resume 'niri msg action power-on-monitors' \\
-    timeout 900 '~/.config/niri/scripts/locker' \\
-    before-sleep '~/.config/niri/scripts/locker' \\
+    timeout  900 '~/.config/niri/scripts/locker' \\
+    timeout 5400 'systemctl sleep' \\
     lock '~/.config/niri/scripts/locker'\\
+  "
+// Lock screen before going to sleep
+spawn-sh-at-startup "\\
+  swayidle -w \\
+    before-sleep '~/.config/niri/scripts/locker' \\
   "
 // Remove screen lock file in case of ungraceful exits
 spawn-sh-at-startup "rm $HOME/.config/niri/scripts/locker-$WAYLAND_DISPLAY.lock"

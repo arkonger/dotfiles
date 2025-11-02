@@ -5,7 +5,7 @@ LOCK="$HOME/.config/niri/scripts/locker-$WAYLAND_DISPLAY.lock"
 if [[ -a $LOCK ]]
 then
   echo "Locker error: Lock file already exists!"
-  exit
+  exit 1
 fi
 touch $LOCK
 
@@ -31,7 +31,7 @@ gtklock -t '%H:%M:%S' \
 # Kill child
 kill $CHILD || kill -9 $CHILD
 # Release lock
-rm $LOCK
+rm $LOCK || echo -e "Locker error: Could not remove lock file at:\n\t$LOCK"
 
 # Wake up display
 niri msg action power-on-monitors
