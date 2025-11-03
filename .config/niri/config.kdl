@@ -249,13 +249,13 @@ spawn-sh-at-startup "wlsunset -l 42.36 -L -71.06"
 spawn-at-startup "niriusd"
 // Application switcher
 spawn-at-startup "niriswitcher"
-// Power off screen after 5m; lock after 15m
+// Power off screen after 5m; lock after 15m; sleep after 90m
 spawn-sh-at-startup "\\
   swayidle \\
     timeout  300 'niri msg action power-off-monitors' \\
       resume 'niri msg action power-on-monitors' \\
     timeout  900 '~/.config/niri/scripts/locker' \\
-    timeout 5400 'systemctl sleep' \\
+    timeout 5400 'pgrep gtklock && systemctl sleep' \\
     lock '~/.config/niri/scripts/locker'\\
   "
 // Lock screen before going to sleep
