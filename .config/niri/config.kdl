@@ -25,17 +25,14 @@
 //    #6E51B0
 //    #4D2D8A
 //
-//  Urgent Hue (hue+15°):
-//    #FF0069
-//
 //  Colors from niri logo:
 //    #D8485F
-//    #FF0057
+//    #FF0057 Urgent (hue+ ~20.2°)
 //    #B04F5A
 //    #8A2C3B
 //
 //    #D88748
-//    #FF8800
+//    #FF8800 (hue+ ~61.8°)
 //    #AF774E
 //    #89532A
 
@@ -154,7 +151,7 @@ layout {
 
     active-color    "#FF0099"
     inactive-color  "#A956AF"
-    urgent-color    "#FF0069"
+    urgent-color    "#FF0057"
   }
 
   preset-column-widths {
@@ -179,17 +176,17 @@ layout {
     active-gradient   from="#FF0099" to="#EE00FF" angle=-90 \
       in="oklch shorter hue"
     inactive-color "#A956AF"
-    urgent-gradient   from="#FF0069" to="#FF0099" angle=-90 \
+    urgent-gradient   from="#FF0057" to="#FF0099" angle=-90 \
       in="oklch shorter hue"
   }
-  // A difference of 135deg maximizes the visual contrast
+  // A difference of 135° maximizes the visual contrast
   focus-ring {
     width 8
     active-gradient   from="#FF0099" to="#EE00FF" angle=45 \
       in="oklch shorter hue"
     inactive-gradient from="#9F5675" to="#A956AF" angle=45 \
       in="oklch shorter hue"
-    urgent-gradient   from="#FF0069" to="#FF0099" angle=45 \
+    urgent-gradient   from="#FF0057" to="#FF0099" angle=45 \
       in="oklch shorter hue"
   }
   // Shadow style
