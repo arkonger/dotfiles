@@ -2,16 +2,16 @@
 //  Base Hue:
 //    Funny meme color, but also pretty :3
 //    #B00B69
-//    #FF0099
-//    #9F5675
-//    #712D4C
+//    #FF0099 (cusp)
+//    #9F5675 (50% absolute C -> 50% absolute Lr)
+//    #712D4C (50% absolute C -> 25% absolute Lr)
 //
-//  Analogous Hue 1:
+//  Analogous Hue 1 (hue-15°):
 //    #FF00CF
 //    #B05295
 //    #892E71
 //
-//  Analogous Hue 2:
+//  Analogous Hue 2 (hue-30°):
 //    #EE00FF
 //    #A956AF
 //    #823089
@@ -20,7 +20,12 @@
 //    #866687
 //    #C09EC2
 //
-//  Urgent Hue:
+//  Analogous Hue 3 (hue-60°):
+//    #8201FF
+//    #6E51B0
+//    #4D2D8A
+//
+//  Urgent Hue (hue+15°):
 //    #FF0069
 //
 //  Colors from niri logo:
@@ -208,7 +213,7 @@ window-rule {
 // Opacity rules
 window-rule {
   match is-active=true
-  opacity 0.95
+  opacity 0.9
 }
 window-rule {
   match is-active=false
@@ -241,7 +246,7 @@ spawn-at-startup "xfce4-panel"
 spawn-sh-at-startup "udiskie -t"
 // TODO: What was I supposed to use instead of this?
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-spawn-sh-at-startup "swaybg -i $HOME/.local/share/wallpaper.png"
+spawn-sh-at-startup "swaybg -i $HOME/.local/share/wallpaper"
 spawn-sh-at-startup "wlsunset -l 42.36 -L -71.06"
 
 // Setting up niri
