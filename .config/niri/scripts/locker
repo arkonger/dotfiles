@@ -17,13 +17,14 @@ CHILD=$!
 # Wake up display to get screenshot
 niri msg action power-on-monitors
 
+# Get screenshot & blur for background
+grimshot save screen - | magick - -blur 0x5 /tmp/locker_${WAYLAND_DISPLAY}_bg
 # Start a screen transition
-niri msg action do-screen-transition -d 333
+niri msg action do-screen-transition -d 1000
 # Start gtklock
-gtklock -t '%H:%M:%S' \
+gtklock -t '%I:%M:%S %P' \
   --date-format '%F — %A' \
-  -b <(grimshot save screen - | \
-        magick - -blur 0x5 -) \
+  -b /tmp/locker_${WAYLAND_DISPLAY}_bg \
   -H -T 15 \
   -g 'Breeze'
 
