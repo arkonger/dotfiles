@@ -50,7 +50,7 @@ input {
   keyboard {
     track-layout "global"
     xkb {
-      layout "us,us(altgr-intl)"
+      layout "us,us-math"
       options "grp:alt_caps_toggle,compose:rctrl-altgr,nbsp:level3"
     }
 
