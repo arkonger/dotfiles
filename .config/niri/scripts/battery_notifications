@@ -1,0 +1,42 @@
+#!/bin/bash
+
+while true; do
+  # Get battery state; save notification ID to NOTI
+  NOTI=$(acpi -b | awk -F '[,:%]' '{print $2 $3}' | {
+    read -r STATUS CAPACITY
+
+    # Send a notification & play a sound if battery below 40%
+    if [[ $STATUS = Discharging && $CAPACITY -le 40 ]]; then
+      # Do not print another notification if one already exists
+      if [ -z "$NOTI" ]; then
+        notify-send -p -t 0 -a "Battery" "Battery Low!" "Please charge."
+      # Propogate value of NOTI to the next loop
+      else
+        echo $NOTI
+      fi
+      niri msg action spawn-sh -- \
+        "ffplay -nodisp -autoexit /usr/share/sounds/ocean/stereo/battery-low.oga"
+    # Send a notification & play a sound if battery above 80%
+    elif [[ $STATUS = Charging && $CAPACITY -ge 80 ]]; then
+      # Do not print another notification if one already exists
+      if [ -z "$NOTI" ]; then
+        notify-send -p -t 0 -a "Battery" \
+          "Battery Full!" "Unplug now for best health."
+      # Propogate value of NOTI to the next loop
+      else
+        echo $NOTI
+      fi
+      niri msg action spawn-sh -- \
+        "ffplay -nodisp -autoexit /usr/share/sounds/ocean/stereo/battery-full.oga"
+    # Clear lingering notifications & unset NOTI
+    else
+      if [ -n "$NOTI" ]; then
+        notify-send -r $NOTI -t 1 -a "Battery" "Clear notification"
+        unset NOTI
+      fi
+    fi
+  })
+
+  # Only check every 30s
+  sleep 30
+done

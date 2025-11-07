@@ -267,6 +267,8 @@ spawn-sh-at-startup "\\
   "
 // Remove screen lock file in case of ungraceful exits
 spawn-sh-at-startup "rm $HOME/.config/niri/scripts/locker-$WAYLAND_DISPLAY.lock"
+// Send notifications at different battery levels
+spawn-sh-at-startup "~/.config/niri/scripts/battery_notifications"
 
 // TODO: put window rules here
 
