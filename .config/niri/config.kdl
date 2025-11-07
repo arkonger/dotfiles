@@ -257,7 +257,7 @@ spawn-sh-at-startup "\\
     timeout  300 'niri msg action power-off-monitors' \\
       resume 'niri msg action power-on-monitors' \\
     timeout  900 '~/.config/niri/scripts/locker' \\
-    timeout 5400 'pgrep gtklock && systemctl sleep' \\
+    timeout 5400 '~/.config/niri/scripts/sleep-if-locked' \\
     lock '~/.config/niri/scripts/locker'\\
   "
 // Lock screen before going to sleep

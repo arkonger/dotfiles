@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if pgrep gtklock; then
+  if upower -i /org/freedesktop/UPower/devices/battery_BAT0 | \
+    grep -E "state:\\s+discharging"; then
+    systemctl sleep
+  else
+    echo "Battery is charging"
+  fi
+else
+  echo "Could not find screen lock"
+fi
