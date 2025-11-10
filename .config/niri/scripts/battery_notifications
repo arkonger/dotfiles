@@ -14,8 +14,7 @@ while true; do
       else
         echo $NOTI
       fi
-      niri msg action spawn-sh -- \
-        "ffplay -nodisp -autoexit /usr/share/sounds/ocean/stereo/battery-low.oga"
+      ffplay -nodisp -autoexit /usr/share/sounds/ocean/stereo/battery-low.oga
     # Send a notification & play a sound if battery above 80%
     elif [[ $STATUS = Charging && $CAPACITY -ge 80 ]]; then
       # Do not print another notification if one already exists
@@ -26,8 +25,7 @@ while true; do
       else
         echo $NOTI
       fi
-      niri msg action spawn-sh -- \
-        "ffplay -nodisp -autoexit /usr/share/sounds/ocean/stereo/battery-full.oga"
+      ffplay -nodisp -autoexit /usr/share/sounds/ocean/stereo/battery-full.oga
     # Clear lingering notifications & unset NOTI
     else
       if [ -n "$NOTI" ]; then
