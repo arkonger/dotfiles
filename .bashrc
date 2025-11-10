@@ -5,11 +5,29 @@
 
 # Courtesy of /u/badmemekid3000 and /u/MoyensInoperants:
 # https://old.reddit.com/r/linuxmasterrace/comments/dhrhab/it_took_about_an_hour_to_get_it_to_look_right_im/f3r2kq8/?context=3
+# Set font to bold
 echo -ne "\033[1m"
-lsb_release --description --release | cut -f2 |\
-  awk 'NR == 1 {print} NR > 1 {print "\t"$0}' | figlet -pf smslant | lolcat
+# Get distro and version for greeting
+DISTRO=$(lsb_release --description | cut -f2)
+VERSION="\t$(lsb_release --release | cut -f2)"
+COLOR_OFFSET=12
+# Only print fancy greeting if terminal is wide enough
+if [[ $(stty -a | grep -Po "(?<=columns )\d+") -ge 80 ]]; then
+  DISTRO=$(echo "$DISTRO" | figlet -pf smslant)
+  VERSION=$(echo -e "$VERSION" | figlet -pf smslant)
+  COLOR_OFFSET=20
+fi
+# Print greeting using lolcat for colorful output
+echo -e "${DISTRO}\n${VERSION}" | lolcat -t -S 9 -p 6
+# Unbold font
 echo -e "\033[0m"
-echo -e "Welcome back, $USER! Today is $(date '+%A, %b %d.')" | lolcat
+# Unset variables that are no longer needed
+unset DISTRO
+unset VERSION
+# Finish the lolcat greeting
+echo -e "Welcome back, $USER! Today is $(date '+%A, %b %d.')" | \
+  lolcat -t -S $COLOR_OFFSET -p 6
+unset COLOR_OFFSET
 
 # Adds fuck functionality
 eval $(thefuck --alias)
