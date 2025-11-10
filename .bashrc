@@ -44,7 +44,7 @@ eval $(dircolors -b)
 alias ls='ls $LS_OPTIONS'
 
 # If not in a graphical session, then use legacy prompt instead
-if [[ $DISPLAY == '' ]]; then {
+if [[ $DISPLAY == '' && $WAYLAND_DISPLAY == '' ]]; then {
   # Echo a blank line here for better formatting on the greeting
   echo ''
 
