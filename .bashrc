@@ -32,9 +32,6 @@ unset COLOR_OFFSET
 # Adds fuck functionality
 eval $(thefuck --alias)
 
-# Adds zoxide functionality
-eval "$(zoxide init --cmd cd bash)"
-
 # General bash settings
 export HISTCONTROL=erasedups
 export HISTSIZE=10000
@@ -91,3 +88,6 @@ alias i3b="vim ~/.config/i3/i3blocks.conf"
 
 # Always use aria2 for downloads
 alias yt-dlp="yt-dlp --downloader=aria2c"
+
+# Adds zoxide functionality
+eval "$(zoxide init --cmd cd bash)"
